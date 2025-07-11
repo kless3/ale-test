@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cool Animation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff00cc, #3333ff, #00ffcc);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .text {
+            font-size: 8vw;
+            font-weight: bold;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #ff0000, #ffff00, #ff00ff, #00ff00, #00ffff, #0000ff);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: rainbow 4s linear infinite, pulse 1.5s ease-in-out infinite alternate;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            to {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="particles" id="particles"></div>
+<h1 class="text">hello nahui</h1>
+
+<script>
+    // Create particles
+    const particlesContainer = document.getElementById('particles');
+    const particleCount = 50;
+
+    for (let i = 0; i < particleCount; i++) {
+        createParticle();
+    }
+
+    function createParticle() {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+
+        // Random size between 2px and 10px
+        const size = Math.random() * 8 + 2;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+
+        // Random position
+        particle.style.left = `${Math.random() * 100}vw`;
+        particle.style.bottom = `-${size}px`;
+
+        // Random animation duration between 5s and 15s
+        const duration = Math.random() * 10 + 5;
+        particle.style.animationDuration = `${duration}s`;
+
+        // Random delay
+        particle.style.animationDelay = `${Math.random() * 5}s`;
+
+        particlesContainer.appendChild(particle);
+
+        // Remove particle after animation completes and create a new one
+        setTimeout(() => {
+            particle.remove();
+            createParticle();
+        }, duration * 1000);
+    }
+</script>
+</body>
+</html>
